@@ -1,0 +1,66 @@
+# Deploy *one* folder of the repo (transportadora/dist) as a GitHub Pages site.
+#
+# ────────────────────────────────────────────────────────────────
+#  HOW TO ADD ANOTHER PROJECT LATER
+#  • Put its source in a sibling folder, e.g.   apps/another-site/
+#  • Give it an npm script that outputs to ./dist   (most CLIs do this by default).
+#  • Duplicate the build step below, or replace the single build step with
+#    a build *matrix* if you want to deploy several projects at once.
+#  • Point the "path:" in upload-pages-artifact to the new project's dist folder
+#    and push – that’s it.
+# ────────────────────────────────────────────────────────────────
+#
+# Prerequisites (do once):
+# 1.  Repository ▸ Settings ▸ Pages ▸ "Build and deployment source" ▸ **GitHub Actions**
+# 2.  Nothing else – this workflow handles the rest.
+
+name: Deploy sites to GitHub Pages
+
+on:
+  push:
+    branches: [main] # rebuild on every push to main
+  workflow_dispatch: # allow a manual "Run workflow" button
+
+permissions:
+  contents: read # to fetch the code
+  pages: write # to push the artefact to GitHub Pages
+  id-token: write # to authenticate the deployment
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1️⃣  Check out the repo
+      - uses: actions/checkout@v4
+
+      # 2️⃣  Install Node (adjust the version if you like)
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      # 3️⃣  Install deps & build the *transportadora* project
+      #      ‣ Edit these commands if you use yarn / pnpm / turbo / nx.
+      - name: Build transportadora
+        run: |
+          cd transportadora
+          npm ci               # installs dependencies
+          npm run build        # outputs static files to ./dist
+
+      # 4️⃣  Upload the *exact* folder we want to be the web root
+      - name: Upload Pages artefact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Path *relative to the repo root* — change if you add more projects
+          path: transportadora/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages # required by the deploy action
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deploy
+        uses: actions/deploy-pages@v4
