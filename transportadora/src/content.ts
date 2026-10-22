@@ -1,19 +1,16 @@
 // All copy and contact details live here so they can be edited in one place.
-// The brand name, phone, e-mail and city are placeholders — replace them.
 
-export const marca = "Transportes Cordillera";
+export const marca = "Transporte Chaparral";
 
 export const contacto = {
-  telefono: "+57 300 000 0000",
-  telefonoHref: "tel:+573000000000",
+  telefono: "+57 312 840 4143",
+  telefonoHref: "tel:+573128404143",
   whatsappHref:
-    "https://wa.me/573000000000?text=" +
+    "https://wa.me/573128404143?text=" +
     encodeURIComponent("Hola, quisiera una cotización de transporte."),
-  email: "contacto@ejemplo.co",
-  emailHref:
-    "mailto:contacto@ejemplo.co?subject=" +
-    encodeURIComponent("Solicitud de cotización"),
-  ciudad: "Bogotá, Colombia",
+  // Optional: set an address to show it in the contact section.
+  email: "",
+  ciudad: "Tauramena, Casanare",
 };
 
 export type Servicio = {
@@ -42,7 +39,7 @@ export const servicios: Servicio[] = [
     id: "petrolero",
     titulo: "Transporte para el sector petrolero",
     resumen:
-      "Traslado privado de personal entre ciudades, bases y campos de operación, ajustado a los turnos de cada contrato.",
+      "Traslado privado de personal entre ciudades, bases y campos de operación del Casanare y la región, ajustado a los turnos de cada contrato.",
     puntos: [
       "Camionetas 4x4, vans y buses según el número de pasajeros",
       "Cambios de guardia y turnos programados",
@@ -52,12 +49,13 @@ export const servicios: Servicio[] = [
     ],
   },
   {
-    id: "helicoptero",
-    titulo: "Helicóptero bajo solicitud",
+    id: "aereo",
+    titulo: "Helicóptero y avioneta bajo solicitud",
     resumen:
       "Para traslados urgentes o a zonas sin acceso por carretera, coordinamos vuelos con operadores aéreos certificados.",
     puntos: [
-      "Traslados de personal a campo o entre ciudades",
+      "Helicóptero para llegar directo a campo o a zonas apartadas",
+      "Avioneta para hasta 3 pasajeros entre pistas y aeródromos",
       "Cotización por trayecto y número de pasajeros",
       "Coordinación de la logística en tierra antes y después del vuelo",
     ],

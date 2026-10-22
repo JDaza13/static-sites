@@ -17,7 +17,7 @@ const paradas = [
   {
     Icono: IconHeli,
     titulo: "Donde no llega la carretera",
-    texto: "Helicóptero bajo solicitud especial",
+    texto: "Helicóptero o avioneta bajo solicitud especial",
     tramo: null,
   },
 ] as const;
@@ -111,9 +111,9 @@ function Hero() {
         falta.
       </h1>
       <p className="mt-7 max-w-[52ch] text-lg leading-relaxed text-gris">
-        Rutas escolares, traslado privado de personal a campo y vuelos en
-        helicóptero bajo solicitud especial, con un solo equipo coordinando todo
-        el trayecto.
+        Desde Tauramena, Casanare: rutas escolares, traslado privado de
+        personal a campo y vuelos en helicóptero o avioneta bajo solicitud
+        especial, con un solo equipo coordinando todo el trayecto.
       </p>
       <div className="mt-9 flex flex-wrap items-center gap-x-6 gap-y-4">
         <BotonCotizar />
@@ -213,7 +213,7 @@ function Contacto() {
           </h2>
           <p className="mt-5 max-w-[44ch] leading-relaxed text-white/75">
             Escríbanos con el origen, el destino y la cantidad de pasajeros. Para
-            vuelos en helicóptero, incluya la fecha tentativa.
+            vuelos en helicóptero o avioneta, incluya la fecha tentativa.
           </p>
           <BotonCotizar className="mt-8" />
         </div>
@@ -221,19 +221,26 @@ function Contacto() {
           <div>
             <dt className="text-sm text-white/60">Teléfono y WhatsApp</dt>
             <dd>
-              <a href={contacto.telefonoHref} className={enlace}>
+              <a
+                href={contacto.whatsappHref}
+                target="_blank"
+                rel="noreferrer"
+                className={enlace}
+              >
                 {contacto.telefono}
               </a>
             </dd>
           </div>
-          <div>
-            <dt className="text-sm text-white/60">Correo</dt>
-            <dd>
-              <a href={contacto.emailHref} className={enlace}>
-                {contacto.email}
-              </a>
-            </dd>
-          </div>
+          {contacto.email && (
+            <div>
+              <dt className="text-sm text-white/60">Correo</dt>
+              <dd>
+                <a href={`mailto:${contacto.email}`} className={enlace}>
+                  {contacto.email}
+                </a>
+              </dd>
+            </div>
+          )}
           <div>
             <dt className="text-sm text-white/60">Oficina</dt>
             <dd className="py-1 text-lg font-semibold">{contacto.ciudad}</dd>
@@ -244,13 +251,39 @@ function Contacto() {
   );
 }
 
+// Flag of Casanare: red upper-left, green lower-right, eight-pointed yellow star.
+function BanderaCasanare({ className }: { className?: string }) {
+  const cx = 450;
+  const cy = 300;
+  const puntas = Array.from({ length: 16 }, (_, i) => {
+    const r = i % 2 === 0 ? 120 : 52;
+    const a = (i * Math.PI) / 8 - Math.PI / 2;
+    return `${(cx + r * Math.cos(a)).toFixed(1)},${(cy + r * Math.sin(a)).toFixed(1)}`;
+  }).join(" ");
+  return (
+    <svg
+      viewBox="0 0 900 600"
+      className={className}
+      role="img"
+      aria-label="Bandera del Casanare"
+    >
+      <polygon points="0,0 900,0 0,600" fill="#D91218" />
+      <polygon points="900,0 900,600 0,600" fill="#088B30" />
+      <polygon points={puntas} fill="#FDDB00" />
+    </svg>
+  );
+}
+
 function Pie() {
   return (
-    <footer className="mx-auto flex max-w-6xl flex-wrap justify-between gap-4 px-5 py-8 text-sm text-gris sm:px-8">
+    <footer className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-5 py-8 text-sm text-gris sm:px-8">
       <span>
         © {new Date().getFullYear()} {marca}
       </span>
-      <span>Transporte escolar, petrolero y aéreo</span>
+      <span className="flex items-center gap-3">
+        Tauramena, Casanare
+        <BanderaCasanare className="h-8 w-12 rounded-[3px] shadow-[0_0_0_1px_rgb(0_0_0/0.08)]" />
+      </span>
     </footer>
   );
 }
