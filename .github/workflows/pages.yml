@@ -1,64 +1,55 @@
-# Deploy *one* folder of the repo (transportadora/dist) as a GitHub Pages site.
+# Deploy every top-level folder of the repo as its own static site on GitHub Pages:
+#   https://<user>.github.io/<repo>/<folder>/
 #
-# ────────────────────────────────────────────────────────────────
-#  HOW TO ADD ANOTHER PROJECT LATER
-#  • Put its source in a sibling folder, e.g.   apps/another-site/
-#  • Give it an npm script that outputs to ./dist   (most CLIs do this by default).
-#  • Duplicate the build step below, or replace the single build step with
-#    a build *matrix* if you want to deploy several projects at once.
-#  • Point the "path:" in upload-pages-artifact to the new project's dist folder
-#    and push – that’s it.
-# ────────────────────────────────────────────────────────────────
+# Adding a site: create a new top-level folder that either
+#   • has a package.json whose `npm run build` writes to dist/ (or build/, out/), and
+#     uses the BASE_PATH env var as its base URL (Vite: `base: process.env.BASE_PATH ?? "/"`), or
+#   • is plain HTML with an index.html at its root.
+# Then push to main. See scripts/build-all.sh.
 #
-# Prerequisites (do once):
-# 1.  Repository ▸ Settings ▸ Pages ▸ "Build and deployment source" ▸ **GitHub Actions**
-# 2.  Nothing else – this workflow handles the rest.
+# One-time prerequisite: Settings ▸ Pages ▸ Build and deployment ▸ Source ▸ "GitHub Actions".
 
 name: Deploy sites to GitHub Pages
 
 on:
   push:
-    branches: [main] # rebuild on every push to main
-  workflow_dispatch: # allow a manual "Run workflow" button
+    branches: [main]
+  workflow_dispatch:
 
 permissions:
-  contents: read # to fetch the code
-  pages: write # to push the artefact to GitHub Pages
-  id-token: write # to authenticate the deployment
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-      # 1️⃣  Check out the repo
       - uses: actions/checkout@v4
 
-      # 2️⃣  Install Node (adjust the version if you like)
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
 
-      # 3️⃣  Install deps & build the *transportadora* project
-      #      ‣ Edit these commands if you use yarn / pnpm / turbo / nx.
-      - name: Build transportadora
-        run: |
-          cd transportadora
-          npm ci               # installs dependencies
-          npm run build        # outputs static files to ./dist
+      - name: Build all sites
+        run: bash scripts/build-all.sh
 
-      # 4️⃣  Upload the *exact* folder we want to be the web root
-      - name: Upload Pages artefact
+      - uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Path *relative to the repo root* — change if you add more projects
-          path: transportadora/dist
+          path: _site
 
   deploy:
     needs: build
     runs-on: ubuntu-latest
     environment:
-      name: github-pages # required by the deploy action
+      name: github-pages
       url: ${{ steps.deploy.outputs.page_url }}
     steps:
       - name: Deploy to GitHub Pages
