@@ -1,57 +1,58 @@
 // Shape every language file must follow. If you add a key here, TypeScript
 // points at each language file that still needs the translation.
 
-type Parada = { titulo: string; texto: string };
+type Stop = { title: string; text: string };
 
-type Servicio = {
-  titulo: string;
-  resumen: string;
-  puntos: string[];
-  nota?: string;
+type Service = {
+  title: string;
+  summary: string;
+  points: string[];
+  note?: string;
 };
 
-type Paso = { titulo: string; texto: string };
+type Step = { title: string; text: string };
 
 // Fixed-length lists: each language must have exactly this many items, in the
 // same order as the icons/ids in App.tsx.
-type Tres<T> = [T, T, T];
+type Three<T> = [T, T, T];
 
 export type Messages = {
   meta: { title: string; description: string };
   nav: {
     label: string;
-    servicios: string;
-    comoTrabajamos: string;
-    contacto: string;
+    services: string;
+    howItWorks: string;
+    contact: string;
   };
-  idioma: { label: string };
+  language: { label: string };
   cta: {
-    cotizar: string;
-    pedirCotizacion: string;
-    verServicios: string;
+    /** Short label for the header button. */
+    quote: string;
+    requestQuote: string;
+    seeServices: string;
     /** Pre-filled WhatsApp message. */
-    mensajeWhatsapp: string;
+    whatsappMessage: string;
   };
-  ubicacion: string;
-  hero: { titulo: string; texto: string };
+  location: string;
+  hero: { title: string; text: string };
   /** Route stops: schools, oil fields, air. */
-  ruta: Tres<Parada>;
-  servicios: {
-    titulo: string;
+  route: Three<Stop>;
+  services: {
+    title: string;
     /** School, oil sector, air. */
-    items: Tres<Servicio>;
+    items: Three<Service>;
   };
-  pasos: {
-    titulo: string;
-    etiqueta: (n: number) => string;
-    items: Tres<Paso>;
+  steps: {
+    title: string;
+    label: (n: number) => string;
+    items: Three<Step>;
   };
-  contacto: {
-    titulo: string;
-    texto: string;
-    telefono: string;
-    correo: string;
-    oficina: string;
+  contact: {
+    title: string;
+    text: string;
+    phone: string;
+    email: string;
+    office: string;
   };
-  pie: { banderaCasanare: string };
+  footer: { casanareFlag: string };
 };

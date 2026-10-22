@@ -9,69 +9,69 @@ export const en: Messages = {
   },
   nav: {
     label: "Main",
-    eventos: "Events",
-    comoFunciona: "How it works",
-    contacto: "Contact",
+    events: "Events",
+    howItWorks: "How it works",
+    contact: "Contact",
   },
-  idioma: { label: "Language" },
-  cta: { planear: "Plan my event", enviar: "Send on WhatsApp" },
+  language: { label: "Language" },
+  cta: { plan: "Plan my event", send: "Send on WhatsApp" },
   hero: {
-    titulo: "Tell us about your event in one sentence.",
-    texto:
+    title: "Tell us about your event in one sentence.",
+    text:
       "We find the exact venue in the area you choose and handle the rest: food, drinks, music, décor and staff.",
   },
-  pedido: {
-    frase:
-      "We're planning {tipo} in {zona} for {personas} guests, and we want it to feel {ambiente}.",
-    etiquetas: {
-      tipo: "Event type",
-      ambiente: "Vibe",
-      zona: "Area or city",
-      personas: "Number of guests",
+  request: {
+    sentence:
+      "We're planning {eventType} in {area} for {guests} guests, and we want it to feel {mood}.",
+    labels: {
+      eventType: "Event type",
+      mood: "Vibe",
+      area: "Area or city",
+      guests: "Number of guests",
     },
-    zonaEjemplo: "Chía or north Bogotá",
-    zonaAyuda: "The area is enough: we'll find the venue.",
-    zonaError: "Enter an area or city to send the request.",
-    personasError: "Enter how many guests are coming, as a number.",
-    fecha: "Approximate date (optional)",
-    menuTitulo: (tipo) => `For ${tipo.enFrase}, we usually serve`,
-    comida: "Food",
-    bebida: "Drinks",
-    menuNota:
+    areaExample: "Chía or north Bogotá",
+    areaHint: "The area is enough: we'll find the venue.",
+    areaError: "Enter an area or city to send the request.",
+    guestsError: "Enter how many guests are coming, as a number.",
+    date: "Approximate date (optional)",
+    menuTitle: (type) => `For ${type.inSentence}, we usually serve`,
+    food: "Food",
+    drinks: "Drinks",
+    menuNote:
       "We adapt the menu to your budget, the event's schedule and your guests' dietary needs.",
-    mensajeSaludo: "Hi, I'd like a quote for an event.",
-    mensajeFecha: (fecha) => `Approximate date: ${fecha}`,
-    mensajeMenu: "Food and drinks: whatever you recommend for this type of event.",
+    messageGreeting: "Hi, I'd like a quote for an event.",
+    messageDate: (date) => `Approximate date: ${date}`,
+    messageMenu: "Food and drinks: whatever you recommend for this type of event.",
   },
-  tipos: {
-    empresa: {
-      enFrase: "a company party",
-      nombre: "Company party",
-      descripcion:
+  eventTypes: {
+    company: {
+      inSentence: "a company party",
+      name: "Company party",
+      description:
         "End-of-year parties, anniversaries, launches and team events of any size.",
-      comida: [
+      food: [
         "Welcome canapés and appetizers",
         "Food stations or a served dinner",
         "Vegetarian and gluten-free options",
       ],
-      bebida: [
+      drinks: [
         "Cocktail, wine and beer bar",
         "Non-alcoholic drinks and coffee",
         "A toast for the closing speech",
       ],
     },
-    boda: {
-      enFrase: "a wedding",
-      nombre: "Wedding",
-      descripcion:
+    wedding: {
+      inSentence: "a wedding",
+      name: "Wedding",
+      description:
         "Ceremony, reception and party, with a coordinator in charge all day.",
-      comida: [
+      food: [
         "Welcome cocktail hour with appetizers",
         "Three-course dinner or buffet",
         "Cake and dessert table",
         "Late-night snacks",
       ],
-      bebida: [
+      drinks: [
         "Sparkling wine for the toast",
         "Wine at the table",
         "Open bar",
@@ -79,87 +79,87 @@ export const en: Messages = {
       ],
     },
     rave: {
-      enFrase: "a rave",
-      nombre: "Rave",
-      descripcion:
+      inSentence: "a rave",
+      name: "Rave",
+      description:
         "Electronic music with sound, lights, permits and entry logistics taken care of.",
-      comida: ["Food trucks and street food", "Snacks all night long"],
-      bebida: [
+      food: ["Food trucks and street food", "Snacks all night long"],
+      drinks: [
         "Hydration points with free water",
         "Fast bar with beer and simple cocktails",
         "Energy drinks and non-alcoholic options",
       ],
     },
-    cumpleanos: {
-      enFrase: "a birthday party",
-      nombre: "Birthday party",
-      descripcion: "From a small dinner to a big party.",
-      comida: ["Sharing platters or food stations", "Custom cake"],
-      bebida: ["House cocktails", "Beer and non-alcoholic drinks"],
+    birthday: {
+      inSentence: "a birthday party",
+      name: "Birthday party",
+      description: "From a small dinner to a big party.",
+      food: ["Sharing platters or food stations", "Custom cake"],
+      drinks: ["House cocktails", "Beer and non-alcoholic drinks"],
     },
-    grado: {
-      enFrase: "a graduation party",
-      nombre: "Graduation party",
-      descripcion: "Celebrations for one family or a whole graduating class.",
-      comida: [
+    graduation: {
+      inSentence: "a graduation party",
+      name: "Graduation party",
+      description: "Celebrations for one family or a whole graduating class.",
+      food: [
         "Buffet lunch or dinner",
         "Sharing platters for the party",
         "Cake or desserts",
       ],
-      bebida: ["A toast for the graduates", "Bar with and without alcohol"],
+      drinks: ["A toast for the graduates", "Bar with and without alcohol"],
     },
-    quince: {
-      enFrase: "a quinceañera",
-      nombre: "Quinceañera",
-      descripcion:
+    quinceanera: {
+      inSentence: "a quinceañera",
+      name: "Quinceañera",
+      description:
         "Waltz, \"hora loca\" party hour and a menu for guests of all ages.",
-      comida: ["Served dinner", "Dessert table and cake", "Snacks for the party hour"],
-      bebida: [
+      food: ["Served dinner", "Dessert table and cake", "Snacks for the party hour"],
+      drinks: [
         "Mocktails for underage guests",
         "Adult bar",
         "A toast",
       ],
     },
   },
-  ambientes: {
-    festivo: "festive",
-    elegante: "elegant",
-    relajado: "laid-back",
-    intimo: "intimate",
-    bohemio: "bohemian",
+  moods: {
+    festive: "festive",
+    elegant: "elegant",
+    laidBack: "laid-back",
+    intimate: "intimate",
+    bohemian: "bohemian",
     tropical: "tropical",
     underground: "underground",
   },
-  eventos: {
-    titulo: "What we plan",
-    texto: "If your event isn't on the list, tell us anyway.",
+  events: {
+    title: "What we plan",
+    text: "If your event isn't on the list, tell us anyway.",
   },
-  pasos: {
-    titulo: "How it works",
-    etiqueta: (n) => `Step ${n}`,
+  steps: {
+    title: "How it works",
+    label: (n) => `Step ${n}`,
     items: [
       {
-        titulo: "Tell us the idea",
-        texto:
+        title: "Tell us the idea",
+        text:
           "Event type, vibe, area and number of guests. The sentence above is enough.",
       },
       {
-        titulo: "Get a proposal",
-        texto:
+        title: "Get a proposal",
+        text:
           "We send you venue options in the area, plus menu, music, décor and budget.",
       },
       {
-        titulo: "Enjoy the event",
-        texto:
+        title: "Enjoy the event",
+        text:
           "We coordinate suppliers, setup and staff on the day of the event.",
       },
     ],
   },
-  contacto: {
-    titulo: "Rather talk to someone?",
-    texto:
+  contact: {
+    title: "Rather talk to someone?",
+    text:
       "Message us on WhatsApp and we'll reply with a few questions to refine the idea.",
     whatsapp: "WhatsApp",
   },
-  pie: { lema: "Events from start to finish" },
+  footer: { tagline: "Events from start to finish" },
 };

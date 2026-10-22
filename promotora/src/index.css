@@ -5,17 +5,17 @@
     "Bricolage Grotesque", ui-sans-serif, system-ui, "PingFang SC",
     "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
 
-  --color-lavanda: #f5f2fa; /* page background */
-  --color-tinta: #23173b; /* main ink */
-  --color-humo: #6a607e; /* secondary text */
-  --color-borde: #dcd5e8; /* rules and borders */
-  --color-noche: #2b1a4a; /* dark surfaces */
-  --color-fucsia: #d1246d; /* accent on light backgrounds */
-  --color-rosa: #ff8dbf; /* accent on dark backgrounds */
+  --color-surface: #f5f2fa; /* page background (lavender) */
+  --color-ink: #23173b; /* main text */
+  --color-muted: #6a607e; /* secondary text */
+  --color-line: #dcd5e8; /* rules and borders */
+  --color-deep: #2b1a4a; /* dark surfaces (night plum) */
+  --color-accent: #d1246d; /* fuchsia, accent on light backgrounds */
+  --color-accent-soft: #ff8dbf; /* pink, accent on dark backgrounds */
 }
 
 /* Lets selects and inputs inside the sentence grow with their content. */
-@utility campo-ajustable {
+@utility field-fit {
   field-sizing: content;
 }
 
@@ -29,9 +29,9 @@
     }
   }
   body {
-    @apply bg-lavanda text-tinta antialiased;
+    @apply bg-surface text-ink antialiased;
   }
   :focus-visible {
-    @apply outline-2 outline-offset-2 outline-fucsia;
+    @apply outline-2 outline-offset-2 outline-accent;
   }
 }

@@ -3,11 +3,11 @@ import { useId } from "react";
 type FlagProps = { className?: string; title?: string };
 
 // Points of a five-pointed star centred on (cx, cy), with one tip at `angle`.
-function estrella(cx: number, cy: number, r: number, angle = -Math.PI / 2) {
+function starPoints(cx: number, cy: number, r: number, angle = -Math.PI / 2) {
   return Array.from({ length: 10 }, (_, i) => {
-    const radio = i % 2 === 0 ? r : r * 0.382;
+    const radius = i % 2 === 0 ? r : r * 0.382;
     const a = angle + (i * Math.PI) / 5;
-    return `${(cx + radio * Math.cos(a)).toFixed(3)},${(cy + radio * Math.sin(a)).toFixed(3)}`;
+    return `${(cx + radius * Math.cos(a)).toFixed(3)},${(cy + radius * Math.sin(a)).toFixed(3)}`;
   }).join(" ");
 }
 
@@ -56,7 +56,7 @@ export function FlagUK({ className, title }: FlagProps) {
 
 /** People's Republic of China: small stars point at the large one. */
 export function FlagCN({ className, title }: FlagProps) {
-  const pequenas: [number, number][] = [
+  const smallStars: [number, number][] = [
     [10, 2],
     [12, 4],
     [12, 7],
@@ -65,11 +65,11 @@ export function FlagCN({ className, title }: FlagProps) {
   return (
     <svg viewBox="0 0 30 20" className={className} {...a11y(title)}>
       <rect width="30" height="20" fill="#EE1C25" />
-      <polygon points={estrella(5, 5, 3)} fill="#FFFF00" />
-      {pequenas.map(([x, y]) => (
+      <polygon points={starPoints(5, 5, 3)} fill="#FFFF00" />
+      {smallStars.map(([x, y]) => (
         <polygon
           key={`${x}-${y}`}
-          points={estrella(x, y, 1, Math.atan2(5 - y, 5 - x))}
+          points={starPoints(x, y, 1, Math.atan2(5 - y, 5 - x))}
           fill="#FFFF00"
         />
       ))}

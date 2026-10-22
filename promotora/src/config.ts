@@ -1,38 +1,43 @@
 // Settings that are the same in every language. Text lives in src/i18n/.
 
-export const marca = "Promotora Rumba";
+export const brand = "Promotora Rumba";
 
-export const contacto = {
-  telefono: "+57 312 840 4143",
+export const contact = {
+  phone: "+57 312 840 4143",
   /** WhatsApp number in international format, digits only. */
   whatsapp: "573128404143",
 };
 
+export function whatsappLink(message?: string) {
+  const base = `https://wa.me/${contact.whatsapp}`;
+  return message ? `${base}?text=${encodeURIComponent(message)}` : base;
+}
+
 /** Event types, in the order they are offered. Text per type is in i18n. */
-export const tipos = [
-  "empresa",
-  "boda",
+export const eventTypeIds = [
+  "company",
+  "wedding",
   "rave",
-  "cumpleanos",
-  "grado",
-  "quince",
+  "birthday",
+  "graduation",
+  "quinceanera",
 ] as const;
-export type TipoId = (typeof tipos)[number];
+export type EventTypeId = (typeof eventTypeIds)[number];
 
 /** Moods offered in the request sentence. */
-export const ambientes = [
-  "festivo",
-  "elegante",
-  "relajado",
-  "intimo",
-  "bohemio",
+export const moodIds = [
+  "festive",
+  "elegant",
+  "laidBack",
+  "intimate",
+  "bohemian",
   "tropical",
   "underground",
 ] as const;
-export type AmbienteId = (typeof ambientes)[number];
+export type MoodId = (typeof moodIds)[number];
 
-export const pedidoInicial = {
-  tipo: "empresa" as TipoId,
-  ambiente: "festivo" as AmbienteId,
-  personas: "80",
+export const initialRequest = {
+  eventType: "company" as EventTypeId,
+  mood: "festive" as MoodId,
+  guests: "80",
 };

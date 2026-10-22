@@ -5,16 +5,16 @@
     "Archivo", ui-sans-serif, system-ui, "PingFang SC", "Hiragino Sans GB",
     "Microsoft YaHei", "Noto Sans SC", sans-serif;
 
-  --color-niebla: #eef1ef; /* page background */
-  --color-asfalto: #1b2420; /* main ink */
-  --color-gris: #56635e; /* secondary text */
-  --color-linea: #cfd7d3; /* rules and borders */
-  --color-llano: #1f4b3f; /* deep green surfaces */
-  --color-senal: #f4b400; /* school-bus yellow, the only accent */
+  --color-surface: #eef1ef; /* page background (fog grey) */
+  --color-ink: #1b2420; /* main text (asphalt) */
+  --color-muted: #56635e; /* secondary text */
+  --color-line: #cfd7d3; /* rules and borders */
+  --color-deep: #1f4b3f; /* deep green surfaces */
+  --color-accent: #f4b400; /* school-bus yellow, the only accent */
 
-  --animate-trazo: trazo 700ms cubic-bezier(0.3, 0.7, 0.2, 1) both;
+  --animate-draw: draw 700ms cubic-bezier(0.3, 0.7, 0.2, 1) both;
 
-  @keyframes trazo {
+  @keyframes draw {
     from {
       transform: scale(0);
     }
@@ -22,7 +22,7 @@
 }
 
 /* Archivo's width axis: expanded cuts for headlines, like road signage. */
-@utility font-ancha {
+@utility font-wide {
   font-stretch: 125%;
 }
 
@@ -36,9 +36,9 @@
     }
   }
   body {
-    @apply bg-niebla text-asfalto antialiased;
+    @apply bg-surface text-ink antialiased;
   }
   :focus-visible {
-    @apply outline-2 outline-offset-2 outline-senal;
+    @apply outline-2 outline-offset-2 outline-accent;
   }
 }

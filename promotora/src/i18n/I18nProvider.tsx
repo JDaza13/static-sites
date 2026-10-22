@@ -1,42 +1,42 @@
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { I18nContext } from "./context";
 import {
-  CLAVE_ALMACEN,
-  detectarIdioma,
-  idiomaPorDefecto,
-  idiomas,
-  type Idioma,
-} from "./idiomas";
+  STORAGE_KEY,
+  defaultLanguage,
+  detectLanguage,
+  languages,
+  type Language,
+} from "./languages";
 
 export function I18nProvider({ children }: { children: ReactNode }) {
-  const [idioma, cambiarIdioma] = useState<Idioma>(detectarIdioma);
+  const [language, setLanguage] = useState<Language>(detectLanguage);
 
   useEffect(() => {
-    const { htmlLang, mensajes } = idiomas[idioma];
+    const { htmlLang, messages } = languages[language];
 
     document.documentElement.lang = htmlLang;
-    document.title = mensajes.meta.title;
+    document.title = messages.meta.title;
     document
       .querySelector('meta[name="description"]')
-      ?.setAttribute("content", mensajes.meta.description);
+      ?.setAttribute("content", messages.meta.description);
 
     try {
-      window.localStorage.setItem(CLAVE_ALMACEN, idioma);
+      window.localStorage.setItem(STORAGE_KEY, language);
     } catch {
       // Storage blocked: the choice just won't be remembered.
     }
 
     // Keep ?lang= in the address so a link opens in the same language.
     const url = new URL(window.location.href);
-    if (idioma === idiomaPorDefecto) url.searchParams.delete("lang");
-    else url.searchParams.set("lang", idioma);
+    if (language === defaultLanguage) url.searchParams.delete("lang");
+    else url.searchParams.set("lang", language);
     window.history.replaceState(window.history.state, "", url);
-  }, [idioma]);
+  }, [language]);
 
-  const valor = useMemo(
-    () => ({ idioma, t: idiomas[idioma].mensajes, cambiarIdioma }),
-    [idioma],
+  const value = useMemo(
+    () => ({ language, t: languages[language].messages, setLanguage }),
+    [language],
   );
 
-  return <I18nContext.Provider value={valor}>{children}</I18nContext.Provider>;
+  return <I18nContext.Provider value={value}>{children}</I18nContext.Provider>;
 }

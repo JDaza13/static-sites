@@ -3,11 +3,11 @@ import { useId } from "react";
 type FlagProps = { className?: string; title?: string };
 
 // Points of a five-pointed star centred on (cx, cy), with one tip at `angle`.
-function estrella(cx: number, cy: number, r: number, angle = -Math.PI / 2) {
+function starPoints(cx: number, cy: number, r: number, angle = -Math.PI / 2) {
   return Array.from({ length: 10 }, (_, i) => {
-    const radio = i % 2 === 0 ? r : r * 0.382;
+    const radius = i % 2 === 0 ? r : r * 0.382;
     const a = angle + (i * Math.PI) / 5;
-    return `${(cx + radio * Math.cos(a)).toFixed(3)},${(cy + radio * Math.sin(a)).toFixed(3)}`;
+    return `${(cx + radius * Math.cos(a)).toFixed(3)},${(cy + radius * Math.sin(a)).toFixed(3)}`;
   }).join(" ");
 }
 
@@ -56,7 +56,7 @@ export function FlagUK({ className, title }: FlagProps) {
 
 /** People's Republic of China: small stars point at the large one. */
 export function FlagCN({ className, title }: FlagProps) {
-  const pequenas: [number, number][] = [
+  const smallStars: [number, number][] = [
     [10, 2],
     [12, 4],
     [12, 7],
@@ -65,11 +65,11 @@ export function FlagCN({ className, title }: FlagProps) {
   return (
     <svg viewBox="0 0 30 20" className={className} {...a11y(title)}>
       <rect width="30" height="20" fill="#EE1C25" />
-      <polygon points={estrella(5, 5, 3)} fill="#FFFF00" />
-      {pequenas.map(([x, y]) => (
+      <polygon points={starPoints(5, 5, 3)} fill="#FFFF00" />
+      {smallStars.map(([x, y]) => (
         <polygon
           key={`${x}-${y}`}
-          points={estrella(x, y, 1, Math.atan2(5 - y, 5 - x))}
+          points={starPoints(x, y, 1, Math.atan2(5 - y, 5 - x))}
           fill="#FFFF00"
         />
       ))}
@@ -79,7 +79,7 @@ export function FlagCN({ className, title }: FlagProps) {
 
 /** Casanare: red upper-left, green lower-right, eight-pointed yellow star. */
 export function FlagCasanare({ className, title }: FlagProps) {
-  const puntas = Array.from({ length: 16 }, (_, i) => {
+  const points = Array.from({ length: 16 }, (_, i) => {
     const r = i % 2 === 0 ? 120 : 52;
     const a = (i * Math.PI) / 8 - Math.PI / 2;
     return `${(450 + r * Math.cos(a)).toFixed(1)},${(300 + r * Math.sin(a)).toFixed(1)}`;
@@ -88,7 +88,7 @@ export function FlagCasanare({ className, title }: FlagProps) {
     <svg viewBox="0 0 900 600" className={className} {...a11y(title)}>
       <polygon points="0,0 900,0 0,600" fill="#D91218" />
       <polygon points="900,0 900,600 0,600" fill="#088B30" />
-      <polygon points={puntas} fill="#FDDB00" />
+      <polygon points={points} fill="#FDDB00" />
     </svg>
   );
 }

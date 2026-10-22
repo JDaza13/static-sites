@@ -10,40 +10,40 @@ export const en: Messages = {
   },
   nav: {
     label: "Main",
-    servicios: "Services",
-    comoTrabajamos: "How it works",
-    contacto: "Contact",
+    services: "Services",
+    howItWorks: "How it works",
+    contact: "Contact",
   },
-  idioma: { label: "Language" },
+  language: { label: "Language" },
   cta: {
-    cotizar: "Quote",
-    pedirCotizacion: "Request a quote",
-    verServicios: "See services",
-    mensajeWhatsapp: "Hi, I'd like a quote for transport services.",
+    quote: "Quote",
+    requestQuote: "Request a quote",
+    seeServices: "See services",
+    whatsappMessage: "Hi, I'd like a quote for transport services.",
   },
-  ubicacion: "Tauramena, Casanare, Colombia",
+  location: "Tauramena, Casanare, Colombia",
   hero: {
-    titulo:
+    title:
       "Ground transport for schools and oil companies. By air, when it's needed.",
-    texto:
+    text:
       "Based in Tauramena, Casanare: school routes, private crew transport to the field, and helicopter or small-plane flights on special request, with one team coordinating the whole trip.",
   },
-  ruta: [
-    { titulo: "Schools", texto: "Daily door-to-door routes" },
-    { titulo: "Oil fields", texto: "Shift changes and crew transport" },
+  route: [
+    { title: "Schools", text: "Daily door-to-door routes" },
+    { title: "Oil fields", text: "Shift changes and crew transport" },
     {
-      titulo: "Where the road ends",
-      texto: "Helicopter or small plane on special request",
+      title: "Where the road ends",
+      text: "Helicopter or small plane on special request",
     },
   ],
-  servicios: {
-    titulo: "Three services, one point of coordination",
+  services: {
+    title: "Three services, one point of coordination",
     items: [
       {
-        titulo: "School transport",
-        resumen:
+        title: "School transport",
+        summary:
           "Daily routes for schools and kindergartens, planned with each school and with clear information for every family.",
-        puntos: [
+        points: [
           "Door-to-door pick-up and drop-off",
           "An escort on every route",
           "GPS tracking for the school and parents",
@@ -52,10 +52,10 @@ export const en: Messages = {
         ],
       },
       {
-        titulo: "Oil-sector crew transport",
-        resumen:
+        title: "Oil-sector crew transport",
+        summary:
           "Private crew transport between cities, bases and operating fields across Casanare and the region, scheduled around each contract's shifts.",
-        puntos: [
+        points: [
           "4x4 pickups, vans and buses sized to your headcount",
           "Scheduled crew changes and shift rotations",
           "Client travel plans and HSE protocols",
@@ -64,47 +64,47 @@ export const en: Messages = {
         ],
       },
       {
-        titulo: "Helicopter and small plane on request",
-        resumen:
+        title: "Helicopter and small plane on request",
+        summary:
           "For urgent transfers or places with no road access, we coordinate flights with certified air operators.",
-        puntos: [
+        points: [
           "Helicopter straight to the field or to remote areas",
           "Small plane for up to 3 passengers between airstrips and airports",
           "Quotes by route and number of passengers",
           "Ground logistics handled before and after the flight",
         ],
-        nota: "Subject to aircraft availability and weather.",
+        note: "Subject to aircraft availability and weather.",
       },
     ],
   },
-  pasos: {
-    titulo: "How to hire us",
-    etiqueta: (n) => `Step ${n}`,
+  steps: {
+    title: "How to hire us",
+    label: (n) => `Step ${n}`,
     items: [
       {
-        titulo: "Tell us what you need",
-        texto:
+        title: "Tell us what you need",
+        text:
           "Origin, destination, schedule and number of passengers. For school routes, the list of addresses.",
       },
       {
-        titulo: "Get a proposal",
-        texto:
+        title: "Get a proposal",
+        text:
           "We send you the route, vehicle type, assigned drivers and rate.",
       },
       {
-        titulo: "We get rolling",
-        texto:
+        title: "We get rolling",
+        text:
           "We confirm dates and give you a direct contact for day-to-day service.",
       },
     ],
   },
-  contacto: {
-    titulo: "Have a route in mind?",
-    texto:
+  contact: {
+    title: "Have a route in mind?",
+    text:
       "Send us the origin, destination and number of passengers. For helicopter or small-plane flights, include a tentative date.",
-    telefono: "Phone and WhatsApp",
-    correo: "Email",
-    oficina: "Office",
+    phone: "Phone and WhatsApp",
+    email: "Email",
+    office: "Office",
   },
-  pie: { banderaCasanare: "Flag of Casanare" },
+  footer: { casanareFlag: "Flag of Casanare" },
 };
