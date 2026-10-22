@@ -34,6 +34,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+          cache: npm
+          cache-dependency-path: "*/package-lock.json"
 
       - name: Build all sites
         run: bash scripts/build-all.sh
