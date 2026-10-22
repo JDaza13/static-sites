@@ -2,10 +2,11 @@
 #   https://<user>.github.io/<repo>/<folder>/
 #
 # Adding a site: create a new top-level folder that either
-#   • has a package.json whose `npm run build` writes to dist/ (or build/, out/), and
+#   • has a package.json whose `build` script writes to dist/ (or build/, out/), and
 #     uses the BASE_PATH env var as its base URL (Vite: `base: process.env.BASE_PATH ?? "/"`), or
 #   • is plain HTML with an index.html at its root.
-# Then push to main. See scripts/build-all.sh.
+# then run `pnpm install` at the repo root (one shared pnpm-lock.yaml) and push
+# to main. See scripts/build-all.sh.
 #
 # One-time prerequisite: Settings ▸ Pages ▸ Build and deployment ▸ Source ▸ "GitHub Actions".
 
@@ -29,21 +30,25 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-node@v4
+      # pnpm version comes from "packageManager" in the root package.json.
+      # cache: true restores the pnpm store, keyed on pnpm-lock.yaml.
+      - uses: pnpm/action-setup@v6
         with:
-          node-version: 22
-          cache: npm
-          cache-dependency-path: "*/package-lock.json"
+          cache: true
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
 
       - name: Build all sites
         run: bash scripts/build-all.sh
 
-      - uses: actions/configure-pages@v5
+      - uses: actions/configure-pages@v6
 
       - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           path: _site
 
@@ -56,4 +61,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deploy
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5

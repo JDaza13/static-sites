@@ -1,0 +1,5 @@
+# Every top-level folder with a package.json is a site in this workspace.
+packages:
+  - "*"
+minimumReleaseAgeExclude:
+  - vite@8.3.5

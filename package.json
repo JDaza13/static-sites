@@ -1,0 +1,8 @@
+{
+  "name": "static-sites",
+  "private": true,
+  "packageManager": "pnpm@12.14.0",
+  "scripts": {
+    "build": "bash scripts/build-all.sh"
+  }
+}

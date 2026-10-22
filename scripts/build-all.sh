@@ -2,9 +2,11 @@
 # Build every top-level folder of the repo into _site/<folder>/ so each one
 # is served as its own static site at  https://<user>.github.io/<repo>/<folder>/
 #
-#  • Folder with package.json  -> npm ci && npm run build, output copied from
-#                                 dist/ (or build/, out/). BASE_PATH is exported
-#                                 so the bundler knows its sub-path.
+#  • Folder with package.json  -> `pnpm run build` (it's a pnpm workspace
+#                                 package; deps are installed once at the root),
+#                                 output copied from dist/ (or build/, out/).
+#                                 BASE_PATH is exported so the bundler knows
+#                                 its sub-path.
 #  • Folder with index.html    -> copied as-is (plain HTML/CSS/JS site).
 #  • Anything else             -> skipped.
 #
@@ -20,6 +22,12 @@ SKIP_DIRS=" scripts node_modules _site "
 
 rm -rf "$OUT"
 mkdir -p "$OUT"
+
+# One install for every site in the workspace (see pnpm-workspace.yaml).
+echo "::group::Installing dependencies (pnpm)"
+(cd "$ROOT" && pnpm install --frozen-lockfile)
+echo "::endgroup::"
+
 touch "$OUT/.nojekyll"
 built=()
 
@@ -28,13 +36,8 @@ for dir in "$ROOT"/*/; do
   [[ "$SKIP_DIRS" == *" $name "* ]] && continue
 
   if [[ -f "$dir/package.json" ]]; then
-    echo "::group::Building $name (npm)"
-    export BASE_PATH="/$REPO_NAME/$name/"
-    (
-      cd "$dir"
-      if [[ -f package-lock.json ]]; then npm ci; else npm install; fi
-      npm run build
-    )
+    echo "::group::Building $name"
+    BASE_PATH="/$REPO_NAME/$name/" pnpm --dir "$dir" run build
     src=""
     for candidate in dist build out; do
       [[ -f "$dir/$candidate/index.html" ]] && { src="$dir/$candidate"; break; }

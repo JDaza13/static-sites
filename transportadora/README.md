@@ -7,10 +7,10 @@ private personnel transport for the oil sector, and helicopter or small-plane
 Stack: Vite 8, React 19, TypeScript 6, Tailwind CSS 4 (`@tailwindcss/vite`), ESLint 10.
 
 ```bash
-npm install
-npm run dev     # local dev at /
-npm run build   # production build in dist/
-npm run lint
+pnpm install    # run once at the repo root (pnpm workspace)
+pnpm dev        # local dev at /
+pnpm build      # production build in dist/
+pnpm lint
 ```
 
 ## Languages
@@ -26,7 +26,7 @@ language is a typed object.
 | `src/config.ts` | Things that don't change by language: brand, phone, WhatsApp, e-mail |
 
 - **Edit text:** change it in the language file. All three use the same keys.
-- **Add a piece of text:** add the key to `types.ts`, then `npm run build`
+- **Add a piece of text:** add the key to `types.ts`, then `pnpm build`
   lists every language file that is missing it.
 - **Add a language:** copy `en.ts` to `<code>.ts`, translate it, and add one
   entry (with a flag component from `src/flags.tsx`) to `idiomas.ts`.
