@@ -1,26 +1,17 @@
-import { contacto, marca, pasos, servicios } from "./content";
+import { contacto, marca } from "./config";
+import { FlagCasanare } from "./flags";
+import { useI18n } from "./i18n/context";
 import { IconBus, IconHeli, IconTruck, IconWhatsApp } from "./icons";
+import { LanguagePicker } from "./LanguagePicker";
 
+// Non-text parts of each list; text comes from the language files, same order.
 const paradas = [
-  {
-    Icono: IconBus,
-    titulo: "Colegios",
-    texto: "Rutas diarias puerta a puerta",
-    tramo: "tierra",
-  },
-  {
-    Icono: IconTruck,
-    titulo: "Campos petroleros",
-    texto: "Cambios de turno y traslado de personal",
-    tramo: "aire",
-  },
-  {
-    Icono: IconHeli,
-    titulo: "Donde no llega la carretera",
-    texto: "Helicóptero o avioneta bajo solicitud especial",
-    tramo: null,
-  },
+  { Icono: IconBus, tramo: "tierra" },
+  { Icono: IconTruck, tramo: "aire" },
+  { Icono: IconHeli, tramo: null },
 ] as const;
+
+const idsServicios = ["escolar", "petrolero", "aereo"] as const;
 
 function BotonCotizar({
   className = "",
@@ -29,51 +20,61 @@ function BotonCotizar({
   className?: string;
   compacto?: boolean;
 }) {
+  const { t } = useI18n();
+  const href = `https://wa.me/${contacto.whatsapp}?text=${encodeURIComponent(t.cta.mensajeWhatsapp)}`;
   return (
     <a
-      href={contacto.whatsappHref}
+      href={href}
       target="_blank"
       rel="noreferrer"
       className={`inline-flex shrink-0 items-center gap-2 rounded-full bg-senal font-semibold whitespace-nowrap text-asfalto transition-colors hover:bg-[#ffc61a] ${
-        compacto ? "px-4 py-2.5 text-[13px]" : "px-5 py-3 text-sm"
+        compacto ? "px-3 py-2.5 text-[13px] sm:px-4" : "px-5 py-3 text-sm"
       } ${className}`}
     >
-      <IconWhatsApp className="size-4" />
-      {compacto ? "Cotizar" : "Pedir cotización"}
+      <IconWhatsApp
+        className={`size-4 ${compacto ? "hidden min-[360px]:block" : ""}`}
+      />
+      {compacto ? t.cta.cotizar : t.cta.pedirCotizacion}
     </a>
   );
 }
 
 function Encabezado() {
+  const { t } = useI18n();
+  const enlace = "hidden text-gris hover:text-asfalto lg:inline";
   return (
-    <header className="mx-auto flex max-w-6xl items-center justify-between px-5 py-5 sm:px-8">
+    <header className="mx-auto flex max-w-6xl items-center justify-between gap-2 px-4 py-5 sm:gap-3 sm:px-8">
       <a href="#inicio" className="flex items-center gap-2.5">
         <span aria-hidden className="size-3 rounded-sm bg-senal" />
-        <span className="font-ancha text-[15px] font-bold tracking-tight whitespace-nowrap">
+        <span className="font-ancha text-[14px] font-bold tracking-tight whitespace-nowrap sm:text-[15px]">
           {marca}
         </span>
       </a>
-      <nav aria-label="Principal" className="flex items-center gap-7 text-sm">
-        <a href="#servicios" className="hidden text-gris hover:text-asfalto md:inline">
-          Servicios
-        </a>
-        <a href="#como-trabajamos" className="hidden text-gris hover:text-asfalto md:inline">
-          Cómo trabajamos
-        </a>
-        <a href="#contacto" className="hidden text-gris hover:text-asfalto md:inline">
-          Contacto
-        </a>
+      <div className="flex items-center gap-1 sm:gap-4">
+        <nav aria-label={t.nav.label} className="flex items-center gap-7 text-sm lg:mr-3">
+          <a href="#servicios" className={enlace}>
+            {t.nav.servicios}
+          </a>
+          <a href="#como-trabajamos" className={enlace}>
+            {t.nav.comoTrabajamos}
+          </a>
+          <a href="#contacto" className={enlace}>
+            {t.nav.contacto}
+          </a>
+        </nav>
+        <LanguagePicker />
         <BotonCotizar compacto />
-      </nav>
+      </div>
     </header>
   );
 }
 
 function Ruta() {
+  const { t } = useI18n();
   return (
     <ol className="grid gap-9 md:grid-cols-3 md:gap-8">
-      {paradas.map(({ Icono, titulo, texto, tramo }, i) => (
-        <li key={titulo} className="relative pl-10 md:pl-0 md:pt-10">
+      {paradas.map(({ Icono, tramo }, i) => (
+        <li key={i} className="relative pl-10 md:pl-0 md:pt-10">
           {/* Stop marker */}
           <span
             aria-hidden
@@ -92,8 +93,10 @@ function Ruta() {
             />
           )}
           <Icono className="mb-3 size-7 text-llano" />
-          <p className="font-ancha text-lg font-bold leading-tight">{titulo}</p>
-          <p className="mt-1 text-[15px] text-gris">{texto}</p>
+          <p className="font-ancha text-lg font-bold leading-tight">
+            {t.ruta[i].titulo}
+          </p>
+          <p className="mt-1 text-[15px] text-gris">{t.ruta[i].texto}</p>
         </li>
       ))}
     </ol>
@@ -101,19 +104,17 @@ function Ruta() {
 }
 
 function Hero() {
+  const { t } = useI18n();
   return (
     <section
       id="inicio"
       className="mx-auto max-w-6xl px-5 pt-14 pb-20 sm:px-8 md:pt-24 md:pb-28"
     >
-      <h1 className="font-ancha max-w-[17ch] text-4xl leading-[1.05] font-extrabold tracking-tight text-balance sm:text-5xl lg:text-[4.25rem]">
-        Transporte por tierra para colegios y petroleras. Por aire, cuando hace
-        falta.
+      <h1 className="font-ancha max-w-[17ch] text-4xl leading-[1.05] font-extrabold tracking-tight text-balance sm:text-5xl lg:text-[4.25rem] [&:lang(zh)]:max-w-[13em] [&:lang(zh)]:leading-[1.2] [&:lang(zh)]:lg:break-keep">
+        {t.hero.titulo}
       </h1>
       <p className="mt-7 max-w-[52ch] text-lg leading-relaxed text-gris">
-        Desde Tauramena, Casanare: rutas escolares, traslado privado de
-        personal a campo y vuelos en helicóptero o avioneta bajo solicitud
-        especial, con un solo equipo coordinando todo el trayecto.
+        {t.hero.texto}
       </p>
       <div className="mt-9 flex flex-wrap items-center gap-x-6 gap-y-4">
         <BotonCotizar />
@@ -121,7 +122,7 @@ function Hero() {
           href="#servicios"
           className="text-sm font-semibold underline decoration-linea decoration-2 underline-offset-[6px] hover:decoration-asfalto"
         >
-          Ver servicios
+          {t.cta.verServicios}
         </a>
       </div>
       <div className="mt-16 md:mt-24">
@@ -132,17 +133,18 @@ function Hero() {
 }
 
 function Servicios() {
+  const { t } = useI18n();
   return (
     <section id="servicios" className="bg-white">
       <div className="mx-auto max-w-6xl px-5 py-20 sm:px-8 md:py-28">
-        <h2 className="font-ancha max-w-[20ch] text-3xl font-bold tracking-tight sm:text-4xl">
-          Tres servicios, una sola coordinación
+        <h2 className="font-ancha max-w-[20ch] text-3xl font-bold tracking-tight sm:text-4xl [&:lang(zh)]:max-w-none">
+          {t.servicios.titulo}
         </h2>
         <div className="mt-12 divide-y divide-linea border-y border-linea">
-          {servicios.map((s) => (
+          {t.servicios.items.map((s, i) => (
             <article
-              key={s.id}
-              id={s.id}
+              key={idsServicios[i]}
+              id={idsServicios[i]}
               className="grid gap-6 py-10 md:grid-cols-[1fr_1.1fr] md:gap-16 md:py-14"
             >
               <div>
@@ -176,19 +178,20 @@ function Servicios() {
 }
 
 function ComoTrabajamos() {
+  const { t } = useI18n();
   return (
     <section
       id="como-trabajamos"
       className="mx-auto max-w-6xl px-5 py-20 sm:px-8 md:py-28"
     >
       <h2 className="font-ancha text-3xl font-bold tracking-tight sm:text-4xl">
-        Cómo contratar
+        {t.pasos.titulo}
       </h2>
       <ol className="mt-12 grid gap-10 md:grid-cols-3 md:gap-8">
-        {pasos.map((p, i) => (
-          <li key={p.titulo} className="border-t-2 border-asfalto pt-5">
+        {t.pasos.items.map((p, i) => (
+          <li key={i} className="border-t-2 border-asfalto pt-5">
             <span className="font-ancha text-sm font-bold text-gris">
-              Paso {i + 1}
+              {t.pasos.etiqueta(i + 1)}
             </span>
             <h3 className="mt-2 text-xl font-semibold">{p.titulo}</h3>
             <p className="mt-2 max-w-[38ch] leading-relaxed text-gris">
@@ -202,38 +205,34 @@ function ComoTrabajamos() {
 }
 
 function Contacto() {
+  const { t } = useI18n();
   const enlace =
     "block py-1 text-lg font-semibold text-white underline decoration-white/30 decoration-2 underline-offset-[6px] hover:decoration-senal";
+  const whatsapp = `https://wa.me/${contacto.whatsapp}?text=${encodeURIComponent(t.cta.mensajeWhatsapp)}`;
   return (
     <section id="contacto" className="bg-llano text-white">
       <div className="mx-auto grid max-w-6xl gap-12 px-5 py-20 sm:px-8 md:grid-cols-2 md:py-28">
         <div>
-          <h2 className="font-ancha max-w-[16ch] text-3xl font-bold tracking-tight sm:text-4xl">
-            ¿Tiene una ruta en mente?
+          <h2 className="font-ancha max-w-[16ch] text-3xl font-bold tracking-tight sm:text-4xl [&:lang(zh)]:max-w-none">
+            {t.contacto.titulo}
           </h2>
           <p className="mt-5 max-w-[44ch] leading-relaxed text-white/75">
-            Escríbanos con el origen, el destino y la cantidad de pasajeros. Para
-            vuelos en helicóptero o avioneta, incluya la fecha tentativa.
+            {t.contacto.texto}
           </p>
           <BotonCotizar className="mt-8" />
         </div>
         <dl className="grid content-start gap-7 md:pt-2">
           <div>
-            <dt className="text-sm text-white/60">Teléfono y WhatsApp</dt>
+            <dt className="text-sm text-white/60">{t.contacto.telefono}</dt>
             <dd>
-              <a
-                href={contacto.whatsappHref}
-                target="_blank"
-                rel="noreferrer"
-                className={enlace}
-              >
+              <a href={whatsapp} target="_blank" rel="noreferrer" className={enlace}>
                 {contacto.telefono}
               </a>
             </dd>
           </div>
           {contacto.email && (
             <div>
-              <dt className="text-sm text-white/60">Correo</dt>
+              <dt className="text-sm text-white/60">{t.contacto.correo}</dt>
               <dd>
                 <a href={`mailto:${contacto.email}`} className={enlace}>
                   {contacto.email}
@@ -242,8 +241,8 @@ function Contacto() {
             </div>
           )}
           <div>
-            <dt className="text-sm text-white/60">Oficina</dt>
-            <dd className="py-1 text-lg font-semibold">{contacto.ciudad}</dd>
+            <dt className="text-sm text-white/60">{t.contacto.oficina}</dt>
+            <dd className="py-1 text-lg font-semibold">{t.ubicacion}</dd>
           </div>
         </dl>
       </div>
@@ -251,38 +250,19 @@ function Contacto() {
   );
 }
 
-// Flag of Casanare: red upper-left, green lower-right, eight-pointed yellow star.
-function BanderaCasanare({ className }: { className?: string }) {
-  const cx = 450;
-  const cy = 300;
-  const puntas = Array.from({ length: 16 }, (_, i) => {
-    const r = i % 2 === 0 ? 120 : 52;
-    const a = (i * Math.PI) / 8 - Math.PI / 2;
-    return `${(cx + r * Math.cos(a)).toFixed(1)},${(cy + r * Math.sin(a)).toFixed(1)}`;
-  }).join(" ");
-  return (
-    <svg
-      viewBox="0 0 900 600"
-      className={className}
-      role="img"
-      aria-label="Bandera del Casanare"
-    >
-      <polygon points="0,0 900,0 0,600" fill="#D91218" />
-      <polygon points="900,0 900,600 0,600" fill="#088B30" />
-      <polygon points={puntas} fill="#FDDB00" />
-    </svg>
-  );
-}
-
 function Pie() {
+  const { t } = useI18n();
   return (
     <footer className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-5 py-8 text-sm text-gris sm:px-8">
       <span>
         © {new Date().getFullYear()} {marca}
       </span>
       <span className="flex items-center gap-3">
-        Tauramena, Casanare
-        <BanderaCasanare className="h-8 w-12 rounded-[3px] shadow-[0_0_0_1px_rgb(0_0_0/0.08)]" />
+        {t.ubicacion}
+        <FlagCasanare
+          title={t.pie.banderaCasanare}
+          className="h-8 w-12 rounded-[3px] shadow-[0_0_0_1px_rgb(0_0_0/0.08)]"
+        />
       </span>
     </footer>
   );
