@@ -3,9 +3,10 @@
 Each top-level folder is its own static site on GitHub Pages:
 `https://jdaza13.github.io/static-sites/<folder>/`.
 
-| Site | URL |
-| --- | --- |
-| `transportadora` | https://jdaza13.github.io/static-sites/transportadora/ |
+| Site | What it is | URL |
+| --- | --- | --- |
+| `transportadora` | Transporte Chaparral: school, oil-sector and air transport | https://jdaza13.github.io/static-sites/transportadora/ |
+| `promotora` | Promotora Rumba: event planning | https://jdaza13.github.io/static-sites/promotora/ |
 
 The repo is a pnpm workspace with a single `pnpm-lock.yaml` at the root.
 
